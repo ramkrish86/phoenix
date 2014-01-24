@@ -84,7 +84,11 @@ public class PArrayDataType {
 
 	public int toBytes(Object object, byte[] bytes, int offset) {
 	    PhoenixArray array = (PhoenixArray)object;
-	    return PDataType.fromTypeId((array.baseType.getSqlType() + Types.ARRAY)).estimateByteSize(object);
+        if (array.baseType != null) {
+            return PDataType.fromTypeId((array.baseType.getSqlType() + Types.ARRAY)).estimateByteSize(object);
+        } else {
+            return 0;
+        }
 	}
 
 	public boolean isCoercibleTo(PDataType targetType, Object value) {
